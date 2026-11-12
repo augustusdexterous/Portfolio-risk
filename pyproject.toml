@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "portfolio-risk"
+version = "0.1.0"
+description = "Portfolio risk measures: VaR, expected shortfall, drawdowns, Kelly and volatility-target sizing, risk contributions and VaR backtesting."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [{ name = "augustusdexterous" }]
+keywords = ["value at risk", "expected shortfall", "drawdown", "kelly", "risk parity", "portfolio", "quantitative finance"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Office/Business :: Financial :: Investment",
+]
+dependencies = ["numpy>=1.22", "scipy>=1.8"]
+
+[project.optional-dependencies]
+examples = ["arch>=5"]
+dev = ["pytest>=7", "ruff>=0.5"]
+
+[project.scripts]
+portfolio-risk = "portfolio_risk.cli:main"
+
+[tool.setuptools]
+packages = ["portfolio_risk"]
+
+[tool.setuptools.package-data]
+portfolio_risk = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 110
