@@ -118,6 +118,8 @@ def main(argv: list[str] | None = None) -> int:
         weights = equal_risk_contribution_weights(cov) if cov is not None else None
         shares = risk_contributions(weights, cov) if cov is not None else None
     except (OSError, ValueError, RuntimeError) as exc:
+        for note in notes:  # the reasons for skipped columns still help when loading fails
+            print(f"skipped column: {note}", file=sys.stderr)
         print(f"error: {exc}", file=sys.stderr)
         return 2
     for name, rep in reports:

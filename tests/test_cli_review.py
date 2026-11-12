@@ -113,3 +113,13 @@ def test_importing_main_module_does_not_run_the_cli():
 
 def test_package_declares_typing_marker():
     assert (ROOT / "portfolio_risk" / "py.typed").exists()
+
+
+def test_skip_reasons_are_printed_even_when_loading_fails(tmp_path, capsys):
+    p = tmp_path / "prices_only.csv"
+    rows = [[f"{100 + i}.5", f"{150 + i}.25"] for i in range(40)]
+    _write(p, rows, ["px_a", "px_b"])
+    assert main([str(p)]) == 2
+    err = capsys.readouterr().err
+    assert "skipped column: px_a" in err and "skipped column: px_b" in err
+    assert "no numeric return columns found" in err
